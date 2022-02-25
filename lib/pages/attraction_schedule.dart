@@ -25,14 +25,6 @@ class ScheduleAttraction extends StatelessWidget {
   Widget build(BuildContext context) {
     final int length = categories.length;
 
-    var decoratedBox = DecoratedBox(
-        decoration: BoxDecoration(
-      image: DecorationImage(
-        fit: BoxFit.cover,
-        image: NetworkImage(img),
-      ),
-    ));
-
     return Scaffold(
       appBar: AppBar(),
       body: Stack(
@@ -42,19 +34,34 @@ class ScheduleAttraction extends StatelessWidget {
             height: double.infinity,
             child: Hero(
                 tag: 'attraction-img-$img',
-                child: Image.network(
-                  img,
-                  fit: BoxFit.cover,
+                child: Container(
+                  decoration: BoxDecoration(
+                      color: Color.fromARGB(255, 24, 27, 31),
+                      image: DecorationImage(
+                          image: NetworkImage(img),
+                          fit: BoxFit.cover,
+                          colorFilter: ColorFilter.mode(
+                              Colors.black.withOpacity(0.2),
+                              BlendMode.dstATop))),
                 )),
           ),
           Column(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               Text(
                 title,
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 30,
+                ),
+                textAlign: TextAlign.center,
               ),
               Column(
                 children: [
-                  Text('Categories'),
+                  Text(
+                    'Categories',
+                    style: TextStyle(color: Colors.white, fontSize: 25),
+                  ),
                   Row(mainAxisAlignment: MainAxisAlignment.center, children: [
                     for (int i = 0; i < length; i++)
                       Card(
@@ -71,20 +78,47 @@ class ScheduleAttraction extends StatelessWidget {
               ),
               Column(
                 children: [
-                  Text('Description'),
+                  Text(
+                    'Description',
+                    style: TextStyle(color: Colors.white, fontSize: 25),
+                  ),
+                  SizedBox(
+                    height: 3,
+                  ),
                   Text(
                     description,
                     textAlign: TextAlign.center,
+                    style: TextStyle(color: Colors.white, fontSize: 15),
                   )
                 ],
               ),
               Column(
-                children: [Text('Address'), Text(address)],
+                children: [
+                  Text(
+                    'Address',
+                    style: TextStyle(color: Colors.white, fontSize: 25),
+                  ),
+                  Text(
+                    address,
+                    style: TextStyle(color: Colors.white, fontSize: 15),
+                  ),
+                ],
               ),
               Column(
                 children: [
-                  Text('Cost'),
-                  cost ? Text('Free') : Text('Not Free')
+                  Text(
+                    'Cost',
+                    style: TextStyle(color: Colors.white, fontSize: 25),
+                  ),
+                  cost
+                      ? Text(
+                          'Free',
+                          style: TextStyle(color: Colors.white, fontSize: 15),
+                        )
+                      : Text(
+                          'Not Free',
+                          style: TextStyle(color: Colors.white, fontSize: 15),
+                        )
                 ],
               ),
               ElevatedButton(onPressed: () {}, child: Text('Add')),
