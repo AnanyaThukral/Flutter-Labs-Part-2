@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
 import 'attractions.dart';
 
@@ -39,6 +41,13 @@ class _MyAppState extends State<MyApp> {
           BottomNavigationBarItem(
               icon: Icon(Icons.calendar_today), label: 'Scheduled'),
         ], selectedItemColor: Colors.amber[800]),
+        floatingActionButton: FloatingActionButton(
+          onPressed: () {
+            //Add you pressed code here
+          },
+          child: Icon(Icons.add),
+          elevation: 12,
+        ),
       ),
       debugShowCheckedModeBanner: false,
     );
