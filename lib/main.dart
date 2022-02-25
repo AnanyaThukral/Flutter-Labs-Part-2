@@ -72,6 +72,9 @@ Widget GetCard(attractions, BuildContext context) {
           builder: (context) => ScheduleAttraction(
                 title: attractions['title'],
                 categories: attractions['categories'],
+                description: attractions['description'],
+                address: attractions['address'],
+                cost: attractions['isFree'],
               )));
     },
     child: Container(
