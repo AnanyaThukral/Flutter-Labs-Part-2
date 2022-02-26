@@ -1,7 +1,4 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:thukral_ananya_lab5_parta/attractions.dart';
-import 'package:thukral_ananya_lab5_parta/main.dart';
 
 class ScheduleAttraction extends StatelessWidget {
   final String title;
