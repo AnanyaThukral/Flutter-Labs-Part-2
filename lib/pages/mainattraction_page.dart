@@ -23,6 +23,18 @@ class _MyAppState extends State<MainAttraction> {
             ),
             onPressed: () {
               // do something
+              showDialog(
+                context: context,
+                builder: (BuildContext context) => AlertDialog(
+                  title: Text('Adjust Filters'),
+                  content: AllCategories(),
+                  actions: [
+                    TextButton(
+                        onPressed: () => Navigator.pop(context, 'Apply'),
+                        child: Text('Apply'))
+                  ],
+                ),
+              );
             },
           )
         ],
@@ -41,6 +53,39 @@ class _MyAppState extends State<MainAttraction> {
           return GetCard(guelphAttractions[index], context);
         });
   }
+}
+
+Widget AllCategories() {
+  final List categories = [
+    'Picnic',
+    'Playground',
+    'Hiking',
+    'Boating',
+    'Icecream',
+    'Tea',
+    'Flowers',
+    'Swimming',
+    'Camping',
+    'Education'
+  ];
+  final int length = categories.length;
+  return Wrap(children: [
+    for (int i = 0; i < length; i++)
+      Stack(
+        children: [
+          GestureDetector(
+            onTap: () {
+              //do something
+            },
+            child: Card(
+              color: Color(0xffDCDCDC),
+              child: Padding(
+                  padding: EdgeInsets.all(5), child: Text(categories[i])),
+            ),
+          )
+        ],
+      )
+  ]);
 }
 
 Widget GetCard(attractions, BuildContext context) {
