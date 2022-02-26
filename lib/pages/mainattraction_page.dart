@@ -56,12 +56,13 @@ class _MyAppState extends State<MainAttraction> {
 }
 
 Widget AllCategories() {
+  final bool click = false;
   final List categories = [
     'Picnic',
     'Playground',
-    'Hiking',
+    'hiking',
     'Boating',
-    'Icecream',
+    'Ice-cream',
     'Tea',
     'Flowers',
     'Swimming',
@@ -69,20 +70,23 @@ Widget AllCategories() {
     'Education'
   ];
   final int length = categories.length;
-  return Wrap(children: [
+  return Wrap(spacing: 2, runSpacing: 2, children: [
     for (int i = 0; i < length; i++)
       Stack(
         children: [
-          GestureDetector(
-            onTap: () {
-              //do something
-            },
-            child: Card(
-              color: Color(0xffDCDCDC),
-              child: Padding(
-                  padding: EdgeInsets.all(5), child: Text(categories[i])),
+          Card(
+            color: Color(0xffDCDCDC),
+            child:
+                Padding(padding: EdgeInsets.all(5), child: Text(categories[i])),
+          ),
+          Positioned(
+            top: 0.0,
+            right: 0.0,
+            child: Icon(
+              Icons.check_circle_rounded,
+              size: 13,
             ),
-          )
+          ),
         ],
       )
   ]);
