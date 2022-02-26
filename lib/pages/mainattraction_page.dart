@@ -10,7 +10,18 @@ class MainAttraction extends StatefulWidget {
 }
 
 class _MyAppState extends State<MainAttraction> {
-  @override
+  List<bool> filterClick = [
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false
+  ];
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -53,43 +64,49 @@ class _MyAppState extends State<MainAttraction> {
           return GetCard(guelphAttractions[index], context);
         });
   }
-}
 
-Widget AllCategories() {
-  final bool click = false;
-  final List categories = [
-    'Picnic',
-    'Playground',
-    'hiking',
-    'Boating',
-    'Ice-cream',
-    'Tea',
-    'Flowers',
-    'Swimming',
-    'Camping',
-    'Education'
-  ];
-  final int length = categories.length;
-  return Wrap(spacing: 2, runSpacing: 2, children: [
-    for (int i = 0; i < length; i++)
-      Stack(
-        children: [
-          Card(
-            color: Color(0xffDCDCDC),
-            child:
-                Padding(padding: EdgeInsets.all(5), child: Text(categories[i])),
+  Widget AllCategories() {
+    final List categories = [
+      'Picnic',
+      'Playground',
+      'hiking',
+      'Boating',
+      'Ice-cream',
+      'Tea',
+      'Flowers',
+      'Swimming',
+      'Camping',
+      'Education'
+    ];
+    final int length = categories.length;
+    return Wrap(spacing: 2, runSpacing: 2, children: [
+      for (int i = 0; i < length; i++)
+        GestureDetector(
+          onTap: () {
+            setState(() {
+              filterClick[i] = !filterClick[i];
+            });
+          },
+          child: Stack(
+            children: [
+              Card(
+                color: filterClick[i] ? Colors.white : Color(0xffDCDCDC),
+                child: Padding(
+                    padding: EdgeInsets.all(5), child: Text(categories[i])),
+              ),
+              Positioned(
+                top: 0.0,
+                right: 0.0,
+                child: Icon(
+                  Icons.check_circle_rounded,
+                  size: 13,
+                ),
+              ),
+            ],
           ),
-          Positioned(
-            top: 0.0,
-            right: 0.0,
-            child: Icon(
-              Icons.check_circle_rounded,
-              size: 13,
-            ),
-          ),
-        ],
-      )
-  ]);
+        )
+    ]);
+  }
 }
 
 Widget GetCard(attractions, BuildContext context) {
