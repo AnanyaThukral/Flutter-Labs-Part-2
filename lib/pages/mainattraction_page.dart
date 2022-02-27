@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:thukral_ananya_lab5_parta/widgets/filter.dart';
 import '../attractions.dart';
 import 'attraction_schedule.dart';
 
@@ -10,18 +11,6 @@ class MainAttraction extends StatefulWidget {
 }
 
 class _MyAppState extends State<MainAttraction> {
-  List<bool> filterClick = [
-    false,
-    false,
-    false,
-    false,
-    false,
-    false,
-    false,
-    false,
-    false,
-    false
-  ];
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -38,7 +27,7 @@ class _MyAppState extends State<MainAttraction> {
                 context: context,
                 builder: (BuildContext context) => AlertDialog(
                   title: Text('Adjust Filters'),
-                  content: AllCategories(),
+                  content: Filter(),
                   actions: [
                     TextButton(
                         onPressed: () => Navigator.pop(context, 'Apply'),
@@ -63,49 +52,6 @@ class _MyAppState extends State<MainAttraction> {
         itemBuilder: (context, index) {
           return GetCard(guelphAttractions[index], context);
         });
-  }
-
-  Widget AllCategories() {
-    final List categories = [
-      'Picnic',
-      'Playground',
-      'hiking',
-      'Boating',
-      'Ice-cream',
-      'Tea',
-      'Flowers',
-      'Swimming',
-      'Camping',
-      'Education'
-    ];
-    final int length = categories.length;
-    return Wrap(spacing: 2, runSpacing: 2, children: [
-      for (int i = 0; i < length; i++)
-        GestureDetector(
-          onTap: () {
-            setState(() {
-              filterClick[i] = !filterClick[i];
-            });
-          },
-          child: Stack(
-            children: [
-              Card(
-                color: filterClick[i] ? Colors.white : Color(0xffDCDCDC),
-                child: Padding(
-                    padding: EdgeInsets.all(5), child: Text(categories[i])),
-              ),
-              Positioned(
-                top: 0.0,
-                right: 0.0,
-                child: Icon(
-                  Icons.check_circle_rounded,
-                  size: 13,
-                ),
-              ),
-            ],
-          ),
-        )
-    ]);
   }
 }
 
