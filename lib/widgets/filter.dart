@@ -8,20 +8,20 @@ class Filter extends StatefulWidget {
 }
 
 class _FilterState extends State<Filter> {
+  List<bool> filterClick = [
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false
+  ];
   @override
   Widget build(BuildContext context) {
-    List<bool> filterClick = [
-      false,
-      false,
-      false,
-      false,
-      false,
-      false,
-      false,
-      false,
-      false,
-      false
-    ];
     final List categories = [
       'Picnic',
       'Playground',
@@ -48,7 +48,8 @@ class _FilterState extends State<Filter> {
               Card(
                 color: filterClick[i] ? Colors.white : Color(0xffDCDCDC),
                 child: Padding(
-                    padding: EdgeInsets.all(5), child: Text(categories[i])),
+                    padding: EdgeInsets.all(5),
+                    child: GestureDetector(child: Text(categories[i]))),
               ),
               Positioned(
                 top: 0.0,

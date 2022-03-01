@@ -24,17 +24,55 @@ class _MyAppState extends State<MainAttraction> {
             onPressed: () {
               // do something
               showDialog(
-                context: context,
-                builder: (BuildContext context) => AlertDialog(
-                  title: Text('Adjust Filters'),
-                  content: Filter(),
-                  actions: [
-                    TextButton(
-                        onPressed: () => Navigator.pop(context, 'Apply'),
-                        child: Text('Apply'))
-                  ],
-                ),
-              );
+                  context: context,
+                  builder: (context) {
+                    return StatefulBuilder(
+                        builder: ((context, setState) => AlertDialog(
+                              title: Text('Adjust Filters'),
+                              content: Filter(),
+                              actions: [
+                                TextButton(
+                                    onPressed: () =>
+                                        Navigator.pop(context, 'Apply'),
+                                    child: Text('Apply')),
+                              ],
+                            )));
+                  }
+                  //
+                  //=> AlertDialog(
+                  //   title: Text('Adjust Filters'),
+                  //   content: Filter(),
+                  //   actions: [
+                  //     TextButton(
+                  //         onPressed: () => Navigator.pop(context, 'Apply'),
+                  //         child: Text('Apply'))
+                  //   ],
+                  // ),
+                  );
+              // showDialog(
+              //   context: context,
+              //   builder: (context) {
+              //     String contentText = "Content of Dialog";
+              //     return StatefulBuilder(
+              //       builder: (context, setState) {
+              //         return AlertDialog(
+              //           title: Text("Adjust Filters"),
+              //           content: Text(contentText),
+              //           actions: <Widget>[
+              //             TextButton(
+              //               onPressed: () {
+              //                 setState(() {
+              //                   contentText = "Changed Content of Dialog";
+              //                 });
+              //               },
+              //               child: Text("Change"),
+              //             ),
+              //           ],
+              //         );
+              //       },
+              //     );
+              //   },
+              // );
             },
           )
         ],
