@@ -35,38 +35,46 @@ class _FilterState extends State<Filter> {
       'Education'
     ];
     final int length = categories.length;
-    return Wrap(spacing: 2, runSpacing: 2, children: [
-      for (int i = 0; i < length; i++)
-        GestureDetector(
-          onTap: () {
-            setState(() {
-              filterClick[i] = !filterClick[i];
-            });
-          },
-          child: Stack(
-            children: [
-              Card(
-                color: filterClick[i] ? Colors.white : Color(0xffDCDCDC),
-                child: Padding(
-                    padding: EdgeInsets.all(5),
-                    child: GestureDetector(child: Text(categories[i]))),
+    return Builder(builder: (context) {
+      double height = MediaQuery.of(context).size.height;
+      double width = MediaQuery.of(context).size.width;
+      return Container(
+        width: height,
+        // height: width,
+        child: Wrap(spacing: 2, runSpacing: 2, children: [
+          for (int i = 0; i < length; i++)
+            GestureDetector(
+              onTap: () {
+                setState(() {
+                  filterClick[i] = !filterClick[i];
+                });
+              },
+              child: Stack(
+                children: [
+                  Card(
+                    color: filterClick[i] ? Colors.white : Color(0xffDCDCDC),
+                    child: Padding(
+                        padding: EdgeInsets.all(5),
+                        child: GestureDetector(child: Text(categories[i]))),
+                  ),
+                  Positioned(
+                    top: 0.0,
+                    right: 0.0,
+                    child: filterClick[i]
+                        ? Icon(
+                            Icons.check_circle_rounded,
+                            size: 0.0,
+                          )
+                        : Icon(
+                            Icons.check_circle_rounded,
+                            size: 13,
+                          ),
+                  ),
+                ],
               ),
-              Positioned(
-                top: 0.0,
-                right: 0.0,
-                child: filterClick[i]
-                    ? Icon(
-                        Icons.check_circle_rounded,
-                        size: 0.0,
-                      )
-                    : Icon(
-                        Icons.check_circle_rounded,
-                        size: 13,
-                      ),
-              ),
-            ],
-          ),
-        )
-    ]);
+            )
+        ]),
+      );
+    });
   }
 }
