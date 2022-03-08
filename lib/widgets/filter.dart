@@ -20,6 +20,10 @@ class _FilterState extends State<Filter> {
     false,
     false
   ];
+
+  //to store selected filter categories
+  List<String> filterStore = [];
+
   @override
   Widget build(BuildContext context) {
     final List categories = [
@@ -47,6 +51,8 @@ class _FilterState extends State<Filter> {
               onTap: () {
                 setState(() {
                   filterClick[i] = !filterClick[i];
+                  filterStore.add(categories[i]);
+                  // print(filterStore);
                 });
               },
               child: Stack(
