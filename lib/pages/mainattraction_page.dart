@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:thukral_ananya_lab5_parta/widgets/filter.dart';
 import '../attractions.dart';
@@ -14,7 +16,7 @@ class _MyAppState extends State<MainAttraction> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Lab Five Part A - Ananya Thukral'),
+        title: const Text('Lab Six - Ananya Thukral'),
         actions: <Widget>[
           IconButton(
             icon: const Icon(
@@ -37,42 +39,7 @@ class _MyAppState extends State<MainAttraction> {
                                     child: Text('Apply')),
                               ],
                             )));
-                  }
-                  //
-                  //=> AlertDialog(
-                  //   title: Text('Adjust Filters'),
-                  //   content: Filter(),
-                  //   actions: [
-                  //     TextButton(
-                  //         onPressed: () => Navigator.pop(context, 'Apply'),
-                  //         child: Text('Apply'))
-                  //   ],
-                  // ),
-                  );
-              // showDialog(
-              //   context: context,
-              //   builder: (context) {
-              //     String contentText = "Content of Dialog";
-              //     return StatefulBuilder(
-              //       builder: (context, setState) {
-              //         return AlertDialog(
-              //           title: Text("Adjust Filters"),
-              //           content: Text(contentText),
-              //           actions: <Widget>[
-              //             TextButton(
-              //               onPressed: () {
-              //                 setState(() {
-              //                   contentText = "Changed Content of Dialog";
-              //                 });
-              //               },
-              //               child: Text("Change"),
-              //             ),
-              //           ],
-              //         );
-              //       },
-              //     );
-              //   },
-              // );
+                  });
             },
           )
         ],
@@ -93,8 +60,25 @@ class _MyAppState extends State<MainAttraction> {
   }
 }
 
+double width(context) {
+  var query = MediaQuery.of(context);
+  if (query.orientation == Orientation.landscape) {
+    return query.size.height;
+  } else {
+    return query.size.width;
+  }
+}
+
 Widget GetCard(attractions, BuildContext context) {
   bool isFree = attractions['isFree'];
+  var landscape = MediaQuery.of(context).orientation == Orientation.landscape;
+  double height = MediaQuery.of(context).size.height;
+  double width = MediaQuery.of(context).size.width;
+  if (MediaQuery.of(context).orientation == Orientation.landscape) {
+    width = height;
+  } else {
+    // height = width;
+  }
 
   final int length = attractions['categories'].length;
   return GestureDetector(
@@ -108,42 +92,45 @@ Widget GetCard(attractions, BuildContext context) {
               cost: attractions['isFree'],
               img: attractions['imageURL'])));
     },
-    child: Container(
-      margin: EdgeInsets.symmetric(vertical: 15),
-      height: 305,
-      child: Card(
-        elevation: 10,
-        child: Column(crossAxisAlignment: CrossAxisAlignment.center, children: [
-          Text(
-            attractions['title'],
-            style: TextStyle(fontWeight: FontWeight.bold),
-          ),
-          SizedBox(
-            width: 350,
-            height: 210,
-            child: Hero(
-              tag: 'attraction-img-${attractions['imageURL']}', //unique image
-              child: Image.network(
-                attractions['imageURL'],
-                fit: BoxFit.cover,
-              ),
+    child: Center(
+      child: Container(
+        margin: EdgeInsets.symmetric(vertical: 15),
+        width: landscape ? width : null,
+        child: Card(
+          elevation: 10,
+          child:
+              Column(crossAxisAlignment: CrossAxisAlignment.center, children: [
+            Text(
+              attractions['title'],
+              style: TextStyle(fontWeight: FontWeight.bold),
             ),
-          ),
-          Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-            for (int i = 0; i < length; i++)
-              Card(
-                elevation: 1,
-                child: Padding(
-                  padding: EdgeInsets.all(3),
-                  child: Text(
-                    attractions['categories'][i],
-                  ),
+            SizedBox(
+              width: 350,
+              height: 210,
+              child: Hero(
+                tag: 'attraction-img-${attractions['imageURL']}', //unique image
+                child: Image.network(
+                  attractions['imageURL'],
+                  fit: BoxFit.cover,
                 ),
               ),
+            ),
+            Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+              for (int i = 0; i < length; i++)
+                Card(
+                  elevation: 1,
+                  child: Padding(
+                    padding: EdgeInsets.all(3),
+                    child: Text(
+                      attractions['categories'][i],
+                    ),
+                  ),
+                ),
+            ]),
+            Text(attractions['address']),
+            isFree ? Icon(Icons.money_off) : Icon(Icons.attach_money)
           ]),
-          Text(attractions['address']),
-          isFree ? Icon(Icons.money_off) : Icon(Icons.attach_money)
-        ]),
+        ),
       ),
     ),
   );
