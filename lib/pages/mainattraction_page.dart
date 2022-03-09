@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:thukral_ananya_lab5_parta/widgets/filter.dart';
 import '../attractions.dart';
@@ -12,19 +13,10 @@ class MainAttraction extends StatefulWidget {
 }
 
 class _MyAppState extends State<MainAttraction> {
-  final List<String> categories = [
-    'Picnic',
-    'Playground',
-    'hiking',
-    'Boating',
-    'Ice-cream',
-    'Tea',
-    'Flowers',
-    'Swimming',
-    'Camping',
-    'Education'
-  ];
-  List<String> selectedList = [];
+  //list to store categories after filtering
+  List<String> updatedCategList = [];
+
+  bool contains = false;
 
   Widget build(BuildContext context) {
     return Scaffold(
@@ -48,12 +40,13 @@ class _MyAppState extends State<MainAttraction> {
                               actions: [
                                 TextButton(
                                   onPressed: () {
-                                    //list storing the updated filters
-                                    // print(Filter.filterStore);
-
+                                    updatedCategList = Filter.filterStore;
+                                    // print(updatedCategList);
+                                    print(updatedCategList.length);
                                     Navigator.pop(context, 'Apply');
                                     //clear the list after clicking on apply
                                     Filter.filterStore.clear();
+                                    updateList();
                                   },
                                   child: Text('Apply'),
                                 ),
@@ -71,6 +64,8 @@ class _MyAppState extends State<MainAttraction> {
   }
 
   Widget getBody(BuildContext context) {
+    final List<String> updates;
+
     return ListView.builder(
         padding: const EdgeInsets.all(5),
         itemCount: guelphAttractions.length,
@@ -79,10 +74,16 @@ class _MyAppState extends State<MainAttraction> {
         });
   }
 
-// void saveState(){
-//   return
-// }
-
+  void updateList() {
+    List<String> productList = [];
+    guelphAttractions.forEach((item) {
+      item['categories'].forEach((category) {
+        // print(category);
+        productList.add(category);
+      });
+    });
+    print(productList);
+  }
 }
 
 Widget GetCard(attractions, BuildContext context) {
