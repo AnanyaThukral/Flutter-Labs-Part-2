@@ -42,11 +42,11 @@ class _MyAppState extends State<MainAttraction> {
                                   onPressed: () {
                                     updatedCategList = Filter.filterStore;
                                     // print(updatedCategList);
-                                    print(updatedCategList.length);
+                                    // print(updatedCategList.length);
                                     Navigator.pop(context, 'Apply');
+                                    // print(updatedCategList);
                                     //clear the list after clicking on apply
                                     Filter.filterStore.clear();
-                                    updateList();
                                   },
                                   child: Text('Apply'),
                                 ),
@@ -64,25 +64,42 @@ class _MyAppState extends State<MainAttraction> {
   }
 
   Widget getBody(BuildContext context) {
-    final List<String> updates;
+    List<String> categoryList = [];
+
+    //extract all filtered categories in a list
+    updatedCategList.forEach((element) {
+      print(element);
+    });
+
+    //extract all categories in a list
+    guelphAttractions.forEach((item) {
+      item['categories'].forEach((category) {
+        categoryList.add(category);
+      });
+    });
+
+    categoryList = categoryList.toSet().toList(); //remove duplicates
+
+    //comapre filtered list list with all category list
+
+    // if (updatedCategList.any((element) => categoryList.contains(element))) {
+    //   print('YES MATCH');
+    // } else {
+    //   print('NO MATCH');
+    // }
 
     return ListView.builder(
         padding: const EdgeInsets.all(5),
         itemCount: guelphAttractions.length,
         itemBuilder: (context, index) {
+          if (updatedCategList
+              .any((element) => categoryList.contains(element))) {
+            print('YES MATCH');
+          } else {
+            print('NO MATCH');
+          }
           return GetCard(guelphAttractions[index], context);
         });
-  }
-
-  void updateList() {
-    List<String> productList = [];
-    guelphAttractions.forEach((item) {
-      item['categories'].forEach((category) {
-        // print(category);
-        productList.add(category);
-      });
-    });
-    print(productList);
   }
 }
 
