@@ -49,7 +49,7 @@ class _MyAppState extends State<MainAttraction> {
                                 TextButton(
                                   onPressed: () {
                                     //list storing the updated filters
-                                    // print(Filter.filterStore);
+                                    print(Filter.filterStore);
 
                                     Navigator.pop(context, 'Apply');
                                     //clear the list after clicking on apply

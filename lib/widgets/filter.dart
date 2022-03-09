@@ -10,13 +10,6 @@ class Filter extends StatefulWidget {
 }
 
 class _FilterState extends State<Filter> {
-  List<String> test = [];
-  @override
-  void initState() {
-    super.initState();
-    test = Filter.filterStore;
-  }
-
   @override
   List<bool> filterClick = [
     false,
