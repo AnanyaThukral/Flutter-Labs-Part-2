@@ -23,7 +23,9 @@ class ScheduleAttraction extends StatelessWidget {
     final int length = categories.length;
 
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        title: Text('Schedule Attraction'),
+      ),
       body: Stack(
         children: [
           SizedBox(
