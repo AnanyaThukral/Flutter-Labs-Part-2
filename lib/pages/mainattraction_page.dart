@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:thukral_ananya_lab5_parta/widgets/filter.dart';
 import '../attractions.dart';
@@ -13,6 +12,20 @@ class MainAttraction extends StatefulWidget {
 }
 
 class _MyAppState extends State<MainAttraction> {
+  final List<String> categories = [
+    'Picnic',
+    'Playground',
+    'hiking',
+    'Boating',
+    'Ice-cream',
+    'Tea',
+    'Flowers',
+    'Swimming',
+    'Camping',
+    'Education'
+  ];
+  List<String> selectedList = [];
+
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -34,9 +47,16 @@ class _MyAppState extends State<MainAttraction> {
                               content: Filter(),
                               actions: [
                                 TextButton(
-                                    onPressed: () =>
-                                        Navigator.pop(context, 'Apply'),
-                                    child: Text('Apply')),
+                                  onPressed: () {
+                                    //list storing the updated filters
+                                    // print(Filter.filterStore);
+
+                                    Navigator.pop(context, 'Apply');
+                                    //clear the list after clicking on apply
+                                    Filter.filterStore.clear();
+                                  },
+                                  child: Text('Apply'),
+                                ),
                               ],
                             )));
                   });
@@ -58,15 +78,11 @@ class _MyAppState extends State<MainAttraction> {
           return GetCard(guelphAttractions[index], context);
         });
   }
-}
 
-double width(context) {
-  var query = MediaQuery.of(context);
-  if (query.orientation == Orientation.landscape) {
-    return query.size.height;
-  } else {
-    return query.size.width;
-  }
+// void saveState(){
+//   return
+// }
+
 }
 
 Widget GetCard(attractions, BuildContext context) {

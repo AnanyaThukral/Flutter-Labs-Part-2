@@ -1,13 +1,23 @@
 import 'package:flutter/material.dart';
 
 class Filter extends StatefulWidget {
-  const Filter({Key? key}) : super(key: key);
+  static List<String> filterStore = [];
+
+  Filter({Key? key}) : super(key: key);
 
   @override
   State<Filter> createState() => _FilterState();
 }
 
 class _FilterState extends State<Filter> {
+  List<String> test = [];
+  @override
+  void initState() {
+    super.initState();
+    test = Filter.filterStore;
+  }
+
+  @override
   List<bool> filterClick = [
     false,
     false,
@@ -21,12 +31,11 @@ class _FilterState extends State<Filter> {
     false
   ];
 
-  //to store selected filter categories
-  List<String> filterStore = [];
+  // List<String> filterStore = [];
 
   @override
   Widget build(BuildContext context) {
-    final List categories = [
+    final List<String> categories = [
       'Picnic',
       'Playground',
       'hiking',
@@ -51,8 +60,10 @@ class _FilterState extends State<Filter> {
               onTap: () {
                 setState(() {
                   filterClick[i] = !filterClick[i];
-                  filterStore.add(categories[i]);
-                  // print(filterStore);
+                  Filter.filterStore.contains(categories[i])
+                      ? Filter.filterStore.remove(categories[i])
+                      : Filter.filterStore.add(categories[i]);
+                  // print(Filter.filterStore);
                 });
               },
               child: Stack(

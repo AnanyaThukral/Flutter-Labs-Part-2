@@ -7,6 +7,18 @@ class SchedulePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final List<String> categories = [
+      'Picnic',
+      'Playground',
+      'hiking',
+      'Boating',
+      'Ice-cream',
+      'Tea',
+      'Flowers',
+      'Swimming',
+      'Camping',
+      'Education'
+    ];
     return Scaffold(
       appBar: AppBar(
         title: Text('Lave Five Part A'),
@@ -24,7 +36,9 @@ class SchedulePage extends StatelessWidget {
                     return StatefulBuilder(
                         builder: ((context, setState) => AlertDialog(
                               title: Text('Adjust Filters'),
-                              content: Filter(),
+                              content: Filter(
+                                  // filterStore: ['categories']
+                                  ),
                               actions: [
                                 TextButton(
                                     onPressed: () =>
