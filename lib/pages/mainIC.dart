@@ -1,36 +1,30 @@
+import 'dart:convert';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:thukral_ananya_lab5_parta/modals/new_attarction.dart';
-import 'package:thukral_ananya_lab5_parta/pages/attraction_page.dart';
-import 'package:thukral_ananya_lab5_parta/pages/mainIC.dart';
+import 'package:thukral_ananya_lab5_parta/pages/mainattraction_page.dart';
 import 'package:thukral_ananya_lab5_parta/widgets/filter.dart';
-import '../attractions.dart';
+import '../attractionsIC.dart';
 import 'attraction_schedule.dart';
+import 'mainFlowers.dart';
 
-class MainAttraction extends StatefulWidget {
-  const MainAttraction({Key? key}) : super(key: key);
+class MainIC extends StatefulWidget {
+  const MainIC({Key? key}) : super(key: key);
 
   @override
-  State<MainAttraction> createState() => _MyAppState();
+  State<MainIC> createState() => _MyAppState();
 }
 
-class _MyAppState extends State<MainAttraction> {
+bool contains = false;
+
+class _MyAppState extends State<MainIC> {
   //list to store categories after filtering
   List<String> updatedCategList = [];
-  List<bool> updatedCategBool = [];
-  bool contains = false;
-  List<Attraction> attraction = [];
-
-  void addAttraction(NewAttraction attraction) {
-    setState(() {
-      guelphAttractions.add(attraction);
-    });
-  }
 
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
-        title: const Text('Lab Seven - Ananya Thukral'),
+        title: const Text('Lab Six - Ananya Thukral'),
         actions: <Widget>[
           IconButton(
             icon: const Icon(
@@ -49,41 +43,25 @@ class _MyAppState extends State<MainAttraction> {
                               actions: [
                                 Builder(builder: (context) {
                                   return TextButton(
-                                    onPressed: () async {
-                                      updatedCategList = Filter.filterStore;
-                                      updatedCategBool = Filter.filterClick;
-                                      Navigator.pop(context, 'Apply');
+                                    onPressed: () {
                                       // print(updatedCategList);
-                                      // print(updatedCategBool);
-                                      if (updatedCategList.join() ==
-                                          'Ice-Cream') {
-                                        // print(updatedCategList);
-                                        Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                                builder: (context) =>
-                                                    MainIC()));
-                                      } else if (updatedCategList.join() ==
-                                          'Flowers') {
-                                        await Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                                builder: (context) =>
-                                                    MainIC()));
-                                      } else {
-                                        await Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                                builder: (context) =>
-                                                    MainIC()));
-                                      }
+                                      updatedCategList = Filter.filterStore;
+                                      // print(updatedCategList.length);
+                                      Navigator.pop(context, 'Apply');
 
+                                      Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) => MainF()));
+                                      // print(updatedCategList);
                                       //clear the list after clicking on apply
                                       Filter.filterStore.clear();
-                                      // Filter.filterClick.clear();
 
                                       setState(() {
+                                        updatedCategList = Filter.filterStore;
                                         contains = !contains;
+                                        getBody(context, updatedCategList,
+                                            contains);
                                       });
                                     },
                                     child: Text('Apply'),
@@ -98,18 +76,59 @@ class _MyAppState extends State<MainAttraction> {
       ),
       body: Container(
           margin: const EdgeInsets.only(left: 15.0, right: 15.0),
-          child: getBody(context)),
+          child: contains
+              ? getBody(context, updatedCategList, contains)
+              : getBody(context, updatedCategList, contains)),
     );
   }
 
-  Widget getBody(BuildContext context) {
+  Widget getBody(BuildContext context, List updatedCategList, bool contain) {
+    List<String> categoryList = [];
+
+    //extract all filtered categories in a list
+    updatedCategList.forEach((element) {
+      // print(element);
+    });
+
+    //extract all categories in a list
+    guelphICAttractions.forEach((item) {
+      item['categories'].forEach((category) {
+        categoryList.add(category);
+      });
+    });
+
+    categoryList = categoryList.toSet().toList(); //remove duplicates
+    // print(categoryList);
+    // comapre filtered list list with all category list
+
+    // if (categoryList.any((element) => updatedCategList.contains(element))) {
+
+    //   print('YES MATCH');
+    // } else {
+    //   print('NO MATCH');
+    // }
+    List updateList = [];
+    for (var el in categoryList) {
+      bool isContains = updatedCategList.any((e) => el.contains(e));
+      if (isContains && contain) {
+        print('match');
+        print(contain);
+        updateList.add(el);
+      } else {
+        print(contain);
+        print('no match');
+      }
+    }
+    print(updateList);
     return ListView.builder(
         padding: const EdgeInsets.all(5),
-        itemCount: guelphAttractions.length,
+        itemCount: guelphICAttractions.length,
         itemBuilder: (context, index) {
-          return GetCard(Attraction(addAttract: addAttraction), context);
+          return GetCard(guelphICAttractions[index], context);
         });
   }
+
+  void checkFilter() {}
 }
 
 Widget GetCard(attractions, BuildContext context) {

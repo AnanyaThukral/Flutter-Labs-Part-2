@@ -2,6 +2,18 @@ import 'package:flutter/material.dart';
 
 class Filter extends StatefulWidget {
   static List<String> filterStore = [];
+  static List<bool> filterClick = [
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false
+  ];
 
   Filter({Key? key}) : super(key: key);
 
@@ -17,19 +29,19 @@ class _FilterState extends State<Filter> {
     test = Filter.filterStore;
   }
 
-  @override
-  List<bool> filterClick = [
-    false,
-    false,
-    false,
-    false,
-    false,
-    false,
-    false,
-    false,
-    false,
-    false
-  ];
+  // @override
+  // List<bool> filterClick = [
+  //   false,
+  //   false,
+  //   false,
+  //   false,
+  //   false,
+  //   false,
+  //   false,
+  //   false,
+  //   false,
+  //   false
+  // ];
 
   // List<String> filterStore = [];
 
@@ -38,9 +50,9 @@ class _FilterState extends State<Filter> {
     final List<String> categories = [
       'Picnic',
       'Playground',
-      'hiking',
+      'Hiking',
       'Boating',
-      'Ice-cream',
+      'Ice-Cream',
       'Tea',
       'Flowers',
       'Swimming',
@@ -59,17 +71,20 @@ class _FilterState extends State<Filter> {
             GestureDetector(
               onTap: () {
                 setState(() {
-                  filterClick[i] = !filterClick[i];
+                  Filter.filterClick[i] = !Filter.filterClick[i];
                   Filter.filterStore.contains(categories[i])
                       ? Filter.filterStore.remove(categories[i])
                       : Filter.filterStore.add(categories[i]);
+
                   // print(Filter.filterStore);
                 });
               },
               child: Stack(
                 children: [
                   Card(
-                    color: filterClick[i] ? Colors.white : Color(0xffDCDCDC),
+                    color: Filter.filterClick[i]
+                        ? Colors.white
+                        : Color(0xffDCDCDC),
                     child: Padding(
                         padding: EdgeInsets.all(5),
                         child: GestureDetector(child: Text(categories[i]))),
@@ -77,7 +92,7 @@ class _FilterState extends State<Filter> {
                   Positioned(
                     top: 0.0,
                     right: 0.0,
-                    child: filterClick[i]
+                    child: Filter.filterClick[i]
                         ? Icon(
                             Icons.check_circle_rounded,
                             size: 0.0,

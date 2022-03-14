@@ -36,8 +36,10 @@ class _MyAppState extends State<Home> {
           }),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          Navigator.of(context)
-              .push(MaterialPageRoute(builder: (context) => Attraction()));
+          Navigator.of(context).push(MaterialPageRoute(
+              builder: (context) => Attraction(
+                    addAttract: (NewAttraction) {},
+                  )));
         },
         child: Icon(Icons.add),
         elevation: 12,
