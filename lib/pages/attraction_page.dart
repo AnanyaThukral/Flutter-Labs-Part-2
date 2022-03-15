@@ -18,7 +18,7 @@ class _AttractionState extends State<Attraction> {
   var priceController = TextEditingController();
   var categoriesController = TextEditingController();
   var descriptionController = TextEditingController();
-
+  // var title;
   @override
   void dispose() {
     titleController.clear();
@@ -111,6 +111,7 @@ class _AttractionState extends State<Attraction> {
                               description: descriptionController.text,
                               imageURL: imageURLController.text),
                         );
+                        print('added');
                       },
                       child: const Text('Create'),
                     ),
