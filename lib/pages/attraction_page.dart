@@ -38,14 +38,15 @@ class _AttractionState extends State<Attraction> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: Text('Add Attraction')),
-      body: Container(
-        child: Padding(
-          padding: EdgeInsets.all(15),
-          child: Form(
-            key: _formKey,
-            child: SingleChildScrollView(
+      body: Padding(
+        padding: EdgeInsets.symmetric(horizontal: 10, vertical: 0),
+        child: Form(
+          key: _formKey,
+          child: SingleChildScrollView(
+            child: Container(
+              height: 600,
               child: Column(
-                mainAxisAlignment: MainAxisAlignment.end,
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   TextFormField(
@@ -83,7 +84,7 @@ class _AttractionState extends State<Attraction> {
                   TextFormField(
                     controller: categoriesController,
                     decoration: InputDecoration(
-                        labelText: 'Categores',
+                        labelText: 'Categories',
                         labelStyle: TextStyle(
                             color: Colors.black,
                             fontSize: 20,
@@ -131,7 +132,16 @@ class _AttractionState extends State<Attraction> {
                   ),
                   Row(
                     children: [
-                      Text("isFree"),
+                      Text(
+                        "isFree",
+                        style: TextStyle(
+                            color: Colors.black,
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold),
+                      ),
+                      SizedBox(
+                        width: 130,
+                      ),
                       Switch(
                           value: isSwitched,
                           onChanged: (value) {
@@ -168,7 +178,6 @@ class _AttractionState extends State<Attraction> {
                                   description: descriptionController.text,
                                   isFree: isSwitched));
                             }
-                            print(isSwitched);
                           },
                           child: const Text('Create'),
                         ),
