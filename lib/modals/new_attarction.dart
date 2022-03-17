@@ -5,8 +5,8 @@ class NewAttraction {
   final String address;
   final String imageURL;
   final bool isFree;
-  // final List<String> categories;
-  final String categories;
+  final List<String> categories;
+  // final String categories;
   final String description;
 
   NewAttraction({

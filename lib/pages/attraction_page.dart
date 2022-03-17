@@ -1,10 +1,12 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:thukral_ananya_lab5_parta/modals/new_attarction.dart';
 import 'package:thukral_ananya_lab5_parta/pages/mainattraction_page.dart';
 
 class Attraction extends StatefulWidget {
   final Function(NewAttraction) addAttract;
-  const Attraction({Key? key, required this.addAttract}) : super(key: key);
+
+  Attraction({Key? key, required this.addAttract}) : super(key: key);
 
   @override
   State<Attraction> createState() => _AttractionState();
@@ -21,14 +23,16 @@ class _AttractionState extends State<Attraction> {
   // var title;
   @override
   void dispose() {
-    titleController.clear();
-    addressController.clear();
-    imageURLController.clear();
-    priceController.clear();
-    categoriesController.clear();
-    descriptionController.clear();
+    titleController.dispose();
+    addressController.dispose();
+    imageURLController.dispose();
+    priceController.dispose();
+    categoriesController.dispose();
+    descriptionController.dispose();
     super.dispose();
   }
+
+  bool isSwitched = false; //for toggle button
 
   @override
   Widget build(BuildContext context) {
@@ -41,12 +45,17 @@ class _AttractionState extends State<Attraction> {
             key: _formKey,
             child: SingleChildScrollView(
               child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                mainAxisAlignment: MainAxisAlignment.end,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   TextFormField(
                     controller: titleController,
-                    decoration: InputDecoration(labelText: 'Attraction Title'),
+                    decoration: InputDecoration(
+                        labelText: 'Attraction Title',
+                        labelStyle: TextStyle(
+                            color: Colors.black,
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold)),
                     // The validator receives the text that the user has entered.
                     validator: (value) {
                       if (value == null || value.isEmpty) {
@@ -57,7 +66,12 @@ class _AttractionState extends State<Attraction> {
                   ),
                   TextFormField(
                     controller: imageURLController,
-                    decoration: InputDecoration(labelText: 'Background Image'),
+                    decoration: InputDecoration(
+                        labelText: 'Background Image',
+                        labelStyle: TextStyle(
+                            color: Colors.black,
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold)),
                     // The validator receives the text that the user has entered.
                     validator: (value) {
                       if (value == null || value.isEmpty) {
@@ -68,7 +82,12 @@ class _AttractionState extends State<Attraction> {
                   ),
                   TextFormField(
                     controller: categoriesController,
-                    decoration: InputDecoration(labelText: 'Categories'),
+                    decoration: InputDecoration(
+                        labelText: 'Categores',
+                        labelStyle: TextStyle(
+                            color: Colors.black,
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold)),
                     // The validator receives the text that the user has entered.
                     validator: (value) {
                       if (value == null || value.isEmpty) {
@@ -78,10 +97,14 @@ class _AttractionState extends State<Attraction> {
                       return null;
                     },
                   ),
-
                   TextFormField(
                     controller: addressController,
-                    decoration: InputDecoration(labelText: 'Description'),
+                    decoration: InputDecoration(
+                        labelText: 'Address',
+                        labelStyle: TextStyle(
+                            color: Colors.black,
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold)),
                     // The validator receives the text that the user has entered.
                     validator: (value) {
                       if (value == null || value.isEmpty) {
@@ -90,30 +113,66 @@ class _AttractionState extends State<Attraction> {
                       return null;
                     },
                   ),
-                  //toggle switch
+                  TextFormField(
+                    controller: descriptionController,
+                    decoration: InputDecoration(
+                        labelText: 'Description',
+                        labelStyle: TextStyle(
+                            color: Colors.black,
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold)),
+                    // The validator receives the text that the user has entered.
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Please enter some text';
+                      }
+                      return null;
+                    },
+                  ),
+                  Row(
+                    children: [
+                      Text("isFree"),
+                      Switch(
+                          value: isSwitched,
+                          onChanged: (value) {
+                            setState(() {
+                              isSwitched = value;
+                              print(isSwitched);
+                            });
+                          }),
+                    ],
+                  ),
                   Padding(
                     padding: const EdgeInsets.symmetric(vertical: 16.0),
-                    child: ElevatedButton(
-                      onPressed: () {
-                        // Validate returns true if the form is valid, or false otherwise.
-                        if (_formKey.currentState!.validate()) {
-                          // If the form is valid, display a snackbar. In the real world,
-                          // you'd often call a server or save the information in a database.
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(content: Text('Attraction Added')),
-                          );
-                        }
-                        widget.addAttract(
-                          NewAttraction(
-                              title: titleController.text,
-                              address: addressController.text,
-                              categories: categoriesController.text,
-                              description: descriptionController.text,
-                              imageURL: imageURLController.text),
-                        );
-                        print('added');
-                      },
-                      child: const Text('Create'),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        ElevatedButton(
+                          onPressed: () {
+                            // Validate returns true if the form is valid, or false otherwise.
+                            if (_formKey.currentState!.validate()) {
+                              // If the form is valid, display a snackbar. In the real world,
+                              // you'd often call a server or save the information in a database.
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(
+                                    content: Text('Attraction Added')),
+                              );
+
+                              widget.addAttract(NewAttraction(
+                                  title: titleController.text,
+                                  address: addressController.text,
+                                  imageURL: imageURLController.text,
+                                  categories: categoriesController.text
+                                      .toString()
+                                      .split(","),
+                                  description: descriptionController.text,
+                                  isFree: isSwitched));
+                            }
+                            print(isSwitched);
+                          },
+                          child: const Text('Create'),
+                        ),
+                      ],
                     ),
                   ),
                 ],
