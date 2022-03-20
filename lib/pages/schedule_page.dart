@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:thukral_ananya_lab5_parta/pages/attraction_page.dart';
+import 'package:thukral_ananya_lab5_parta/pages/home_page.dart';
 
 import '../widgets/filter.dart';
 
@@ -21,7 +23,7 @@ class SchedulePage extends StatelessWidget {
     ];
     return Scaffold(
       appBar: AppBar(
-        title: Text('Lave Five Part A'),
+        title: Text('Lab Seven'),
         actions: <Widget>[
           IconButton(
             icon: const Icon(
@@ -50,6 +52,14 @@ class SchedulePage extends StatelessWidget {
             },
           )
         ],
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Navigator.of(context)
+              .push(MaterialPageRoute(builder: (context) => Home()));
+        },
+        child: Icon(Icons.add),
+        elevation: 12,
       ),
       body: Center(child: Text('Schedule Page')),
     );
