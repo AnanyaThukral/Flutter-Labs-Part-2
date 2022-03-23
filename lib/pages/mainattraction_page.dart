@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:thukral_ananya_lab5_parta/modals/attraction_provider.dart';
 import 'package:thukral_ananya_lab5_parta/modals/new_attarction.dart';
 import 'package:thukral_ananya_lab5_parta/pages/attraction_page.dart';
 import 'package:thukral_ananya_lab5_parta/pages/mainIC.dart';
@@ -21,25 +23,25 @@ class _MyAppState extends State<MainAttraction> {
   List<NewAttraction> attraction_list = [];
 
   @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    guelphAttractions.forEach((element) {
-      attraction_list.add(NewAttraction(
-          title: element['title'],
-          address: element['address'],
-          imageURL: element['imageURL'],
-          categories: element['categories'],
-          description: element['description'],
-          isFree: element['isFree']));
-    });
-  }
+  // void initState() {
+  //   // TODO: implement initState
+  //   super.initState();
+  //   guelphAttractions.forEach((element) {
+  //     attraction_list.add(NewAttraction(
+  //         title: element['title'],
+  //         address: element['address'],
+  //         imageURL: element['imageURL'],
+  //         categories: element['categories'],
+  //         description: element['description'],
+  //         isFree: element['isFree']));
+  //   });
+  // }
 
-  void addAttraction(NewAttraction attraction) {
-    setState(() {
-      attraction_list.add(attraction);
-    });
-  }
+  // void addAttraction(NewAttraction attraction) {
+  //   setState(() {
+  //     attraction_list.add(attraction);
+  //   });
+  // }
 
   Widget build(BuildContext context) {
     return Scaffold(
@@ -113,10 +115,15 @@ class _MyAppState extends State<MainAttraction> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          Navigator.of(context).push(MaterialPageRoute(
-              builder: (context) => Attraction(
-                    addAttract: addAttraction,
-                  )));
+          //old method
+          // Navigator.of(context).push(MaterialPageRoute(
+          //     builder: (context) => Attraction(
+          //           addAttract: addAttraction,
+          //         )));
+
+          Navigator.of(context).push(MaterialPageRoute(builder: (context) {
+            return Attraction();
+          }));
         },
         child: Icon(Icons.add),
         elevation: 12,
@@ -128,12 +135,14 @@ class _MyAppState extends State<MainAttraction> {
   }
 
   Widget getBody(BuildContext context) {
-    return ListView.builder(
-        padding: const EdgeInsets.all(5),
-        itemCount: attraction_list.length,
-        itemBuilder: (context, index) {
-          return GetCard(attraction_list[index], context);
-        });
+    return Consumer<AttractionProvider>(builder: ((context, value, child) {
+      return ListView.builder(
+          padding: const EdgeInsets.all(5),
+          itemCount: value.attract_test.length,
+          itemBuilder: (context, index) {
+            return GetCard(value.attract_test[index], context);
+          });
+    }));
   }
 }
 

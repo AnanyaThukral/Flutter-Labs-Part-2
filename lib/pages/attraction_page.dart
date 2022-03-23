@@ -1,12 +1,16 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:thukral_ananya_lab5_parta/modals/attraction_provider.dart';
 import 'package:thukral_ananya_lab5_parta/modals/new_attarction.dart';
 import 'package:thukral_ananya_lab5_parta/pages/mainattraction_page.dart';
 
 class Attraction extends StatefulWidget {
-  final Function(NewAttraction) addAttract;
+  // final Function(NewAttraction) addAttract;
 
-  Attraction({Key? key, required this.addAttract}) : super(key: key);
+  Attraction({
+    Key? key,
+  }) : super(key: key);
 
   @override
   State<Attraction> createState() => _AttractionState();
@@ -157,30 +161,51 @@ class _AttractionState extends State<Attraction> {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        ElevatedButton(
-                          onPressed: () {
-                            // Validate returns true if the form is valid, or false otherwise.
-                            if (_formKey.currentState!.validate()) {
-                              // If the form is valid, display a snackbar. In the real world,
-                              // you'd often call a server or save the information in a database.
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                const SnackBar(
-                                    content: Text('Attraction Added')),
-                              );
+                        Consumer<AttractionProvider>(
+                          builder: ((context, value, child) {
+                            return ElevatedButton(
+                              onPressed: () {
+                                // Validate returns true if the form is valid, or false otherwise.
+                                if (_formKey.currentState!.validate()) {
+                                  // If the form is valid, display a snackbar. In the real world,
+                                  // you'd often call a server or save the information in a database.
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    const SnackBar(
+                                        content: Text('Attraction Added')),
+                                  );
 
-                              widget.addAttract(NewAttraction(
-                                  title: titleController.text,
-                                  address: addressController.text,
-                                  imageURL: imageURLController.text,
-                                  categories: categoriesController.text
-                                      .toString()
-                                      .split(","),
-                                  description: descriptionController.text,
-                                  isFree: isSwitched));
-                            }
-                          },
-                          child: const Text('Create'),
-                        ),
+                                  //updated code
+                                  Provider.of<AttractionProvider>(context,
+                                          listen: false)
+                                      .addMainAttraction(NewAttraction(
+                                          title: titleController.text,
+                                          address: addressController.text,
+                                          imageURL: imageURLController.text,
+                                          categories: categoriesController.text
+                                              .toString()
+                                              .split(","),
+                                          description:
+                                              descriptionController.text,
+                                          isFree: isSwitched));
+
+                                  //old method start
+                                  // widget.addAttract(NewAttraction(
+                                  //     title: titleController.text,
+                                  //     address: addressController.text,
+                                  //     imageURL: imageURLController.text,
+                                  //     categories: categoriesController.text
+                                  //         .toString()
+                                  //         .split(","),
+                                  //     description: descriptionController.text,
+                                  //     isFree: isSwitched));
+                                  //old method end
+
+                                }
+                              },
+                              child: const Text('Create'),
+                            );
+                          }),
+                        )
                       ],
                     ),
                   ),

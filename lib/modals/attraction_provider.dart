@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:thukral_ananya_lab5_parta/attractions.dart';
 import 'package:thukral_ananya_lab5_parta/modals/new_attarction.dart';
 import 'package:thukral_ananya_lab5_parta/pages/attraction_page.dart';
 
 class AttractionProvider extends ChangeNotifier {
   List<NewAttraction> _items = [];
+  List<NewAttraction> _attractions = [];
   List<NewAttraction> attractions = [
     NewAttraction(
         title: 'Riverside Park',
@@ -61,11 +63,44 @@ class AttractionProvider extends ChangeNotifier {
             "The University of Guelph is a comprehensive public research university in Guelph, Ontario, Canada. It was established in 1964 after the amalgamation of Ontario Agricultural College (1874), the MacDonald Institute (1903), and the Ontario Veterinary College (1922), and has since grown to an institution of almost 30,000 students (including those at the Humber campus, Ridgetown campus, off-campus degree enrolments, diploma enrolments and part-time students) and employs 830 full-time faculty (academic staff) as of fall 2019.")
   ];
 
-  //add items to cart
+  //add attraction fields to schedule page
   void addAttraction(NewAttraction item) {
     _items.add(item);
     notifyListeners();
     // This call tells the widgets that are listening to this model to rebuild.
+  }
+
+  //get the existing data of extractions
+  List<NewAttraction> existingAttraction() {
+    guelphAttractions.forEach((element) {
+      _attractions.add(NewAttraction(
+          title: element['title'],
+          address: element['address'],
+          imageURL: element['imageURL'],
+          categories: element['categories'],
+          description: element['description'],
+          isFree: element['isFree']));
+    });
+    return _attractions;
+  }
+
+  //add attractions to main attractions screen
+  void addMainAttraction(NewAttraction item) {
+    _attractions.add(item);
+    notifyListeners();
+    // This call tells the widgets that are listening to this model to rebuild.
+  }
+
+  List<NewAttraction> get attract {
+    return _attractions;
+  }
+
+  List<NewAttraction> get attract_test {
+    if (attract.length < guelphAttractions.length) {
+      return existingAttraction();
+    } else {
+      return _attractions;
+    }
   }
 
   //getter - get the updated list
