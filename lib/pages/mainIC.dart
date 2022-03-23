@@ -147,12 +147,14 @@ Widget GetCard(attractions, BuildContext context) {
     onTap: () {
       Navigator.of(context).push(MaterialPageRoute(
           builder: (context) => ScheduleAttraction(
-              title: attractions['title'],
-              categories: attractions['categories'],
-              description: attractions['description'],
-              address: attractions['address'],
-              cost: attractions['isFree'],
-              img: attractions['imageURL'])));
+                title: attractions['title'],
+                categories: attractions['categories'],
+                description: attractions['description'],
+                address: attractions['address'],
+                cost: attractions['isFree'],
+                img: attractions['imageURL'],
+                attraction: attractions,
+              )));
     },
     child: Center(
       child: Container(

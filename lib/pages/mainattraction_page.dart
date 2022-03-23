@@ -152,14 +152,16 @@ Widget GetCard(attractions, BuildContext context) {
   final int length = attractions.categories.length;
   return GestureDetector(
     onTap: () {
-      // Navigator.of(context).push(MaterialPageRoute(
-      //     builder: (context) => ScheduleAttraction(
-      //         title: attractions.title,
-      //         categories: attractions.categories,
-      //         description: attractions.description,
-      //         address: attractions.address,
-      //         cost: attractions.isFree,
-      //         img: attractions.imageURL)));
+      Navigator.of(context).push(MaterialPageRoute(
+          builder: (context) => ScheduleAttraction(
+                title: attractions.title,
+                categories: attractions.categories,
+                description: attractions.description,
+                address: attractions.address,
+                cost: attractions.isFree,
+                img: attractions.imageURL,
+                attraction: attractions,
+              )));
     },
     child: Center(
       child: Container(

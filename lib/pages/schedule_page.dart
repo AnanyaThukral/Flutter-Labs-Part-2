@@ -55,8 +55,8 @@ class SchedulePage extends StatelessWidget {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          Navigator.of(context)
-              .push(MaterialPageRoute(builder: (context) => Home()));
+          // Navigator.of(context)
+          //     .push(MaterialPageRoute(builder: (context) => Home()));
         },
         child: Icon(Icons.add),
         elevation: 12,

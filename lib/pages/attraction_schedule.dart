@@ -1,12 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:thukral_ananya_lab5_parta/modals/attraction_provider.dart';
+import 'package:thukral_ananya_lab5_parta/modals/new_attarction.dart';
+import 'package:thukral_ananya_lab5_parta/pages/attraction_page.dart';
+import 'package:thukral_ananya_lab5_parta/pages/mainFlowers.dart';
+import 'package:thukral_ananya_lab5_parta/pages/schedule_add_page.dart';
+import 'package:thukral_ananya_lab5_parta/pages/schedule_page.dart';
 
-class ScheduleAttraction extends StatelessWidget {
+class ScheduleAttraction extends StatefulWidget {
   final String title;
   final List categories;
   final String description;
   final String address;
   final bool cost;
   final String img;
+  final NewAttraction attraction; //added for provider
 
   const ScheduleAttraction(
       {Key? key,
@@ -15,12 +23,18 @@ class ScheduleAttraction extends StatelessWidget {
       required this.description,
       required this.address,
       required this.cost,
-      required this.img})
+      required this.img,
+      required this.attraction})
       : super(key: key);
 
   @override
+  State<ScheduleAttraction> createState() => _ScheduleAttractionState();
+}
+
+class _ScheduleAttractionState extends State<ScheduleAttraction> {
+  @override
   Widget build(BuildContext context) {
-    final int length = categories.length;
+    final int length = widget.categories.length;
 
     return Scaffold(
       appBar: AppBar(
@@ -32,12 +46,12 @@ class ScheduleAttraction extends StatelessWidget {
             width: double.infinity,
             height: double.infinity,
             child: Hero(
-                tag: 'attraction-img-$img',
+                tag: 'attraction-img-${widget.img}',
                 child: Container(
                   decoration: BoxDecoration(
                       color: Color.fromARGB(255, 24, 27, 31),
                       image: DecorationImage(
-                          image: NetworkImage(img),
+                          image: NetworkImage(widget.img),
                           fit: BoxFit.cover,
                           colorFilter: ColorFilter.mode(
                               Colors.black.withOpacity(0.2),
@@ -48,7 +62,7 @@ class ScheduleAttraction extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               Text(
-                title,
+                widget.title,
                 style: TextStyle(
                   color: Colors.white,
                   fontSize: 30,
@@ -68,7 +82,7 @@ class ScheduleAttraction extends StatelessWidget {
                         child: Padding(
                           padding: EdgeInsets.all(3),
                           child: Text(
-                            categories[i].toString(),
+                            widget.categories[i].toString(),
                           ),
                         ),
                       ),
@@ -85,7 +99,7 @@ class ScheduleAttraction extends StatelessWidget {
                     height: 3,
                   ),
                   Text(
-                    description,
+                    widget.description,
                     textAlign: TextAlign.center,
                     style: TextStyle(color: Colors.white, fontSize: 15),
                   )
@@ -98,7 +112,7 @@ class ScheduleAttraction extends StatelessWidget {
                     style: TextStyle(color: Colors.white, fontSize: 25),
                   ),
                   Text(
-                    address,
+                    widget.address,
                     style: TextStyle(color: Colors.white, fontSize: 15),
                   ),
                 ],
@@ -109,7 +123,7 @@ class ScheduleAttraction extends StatelessWidget {
                     'Cost',
                     style: TextStyle(color: Colors.white, fontSize: 25),
                   ),
-                  cost
+                  widget.cost
                       ? Text(
                           'Free',
                           style: TextStyle(color: Colors.white, fontSize: 15),
@@ -120,7 +134,16 @@ class ScheduleAttraction extends StatelessWidget {
                         )
                 ],
               ),
-              ElevatedButton(onPressed: () {}, child: Text('Add')),
+              Consumer<AttractionProvider>(
+                builder: (context, value, child) {
+                  return ElevatedButton(
+                    onPressed: () {
+                      value.addAttraction(widget.attraction);
+                    },
+                    child: const Text('ADD'),
+                  );
+                },
+              )
             ],
           )
         ],

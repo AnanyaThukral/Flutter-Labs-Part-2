@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:thukral_ananya_lab5_parta/pages/mainattraction_page.dart';
+import 'package:thukral_ananya_lab5_parta/pages/schedule_add_page.dart';
 import 'package:thukral_ananya_lab5_parta/pages/schedule_page.dart';
 
 import 'attraction_page.dart';
@@ -14,7 +15,7 @@ class Home extends StatefulWidget {
 class _MyAppState extends State<Home> {
   int selectedPage = 0;
 
-  final _pageOptions = [MainAttraction(), SchedulePage()];
+  final _pageOptions = [MainAttraction(), ScheduleAdd()];
 
   @override
   Widget build(BuildContext context) {
